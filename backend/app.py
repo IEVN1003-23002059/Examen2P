@@ -7,7 +7,7 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Configuración de la Base de Datos
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -33,12 +33,12 @@ MESES = {
 
 
 def normalizar(texto):
-    """Minúsculas y sin tildes: 'Sábado ' -> 'sabado'"""
+  
     texto = unicodedata.normalize('NFD', str(texto).strip().lower())
     return ''.join(c for c in texto if unicodedata.category(c) != 'Mn')
 
 
-# 1. Endpoint para Guardar el Pedido Completo
+
 @app.route('/api/pedidos', methods=['POST'])
 def crear_pedido():
     try:
@@ -80,7 +80,7 @@ def crear_pedido():
         return jsonify({'error': str(e)}), 500
 
 
-# 2. Endpoint para Consultar Ventas por Día (español o inglés, con o sin tilde)
+
 @app.route('/api/ventas/dia', methods=['GET'])
 def ventas_por_dia():
     try:
@@ -126,7 +126,7 @@ def ventas_por_dia():
         return jsonify({'error': str(e)}), 500
 
 
-# 3. Endpoint para Consultar Ventas por Mes (nombre o número)
+
 @app.route('/api/ventas/mes', methods=['GET'])
 def ventas_por_mes():
     try:
@@ -163,7 +163,7 @@ def ventas_por_mes():
         return jsonify({'error': str(e)}), 500
 
 
-# 4. Endpoint para ver el detalle (desglose de pizzas) de un pedido
+
 @app.route('/api/pedidos/<int:pedido_id>/detalle', methods=['GET'])
 def detalle_pedido(pedido_id):
     try:
